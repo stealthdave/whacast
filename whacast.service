@@ -1,0 +1,13 @@
+[Unit]
+Description=Whole House Audio Chromecast Amplifier
+After=multi-user.target
+
+[Service]
+WorkingDirectory=/opt/whacast/src
+ExecStart=/opt/whacast/castenv/bin/python -m whacast whacast.json
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+
+[Install]
+Alias=whacast.service

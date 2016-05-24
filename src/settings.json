@@ -1,0 +1,74 @@
+{
+    "global": {
+        "poll_delay": 0.25,
+        "reconnect_delay": 60,
+        "reload_device_delay": 14400,
+        "max_retries": 15,
+        "log_file": "/var/log/whacast.log"
+    },
+    
+    "chromecasts": [
+        {
+            "friendly_name": "WHA Living Room",
+            "control": "lirc",
+            "on": {
+                "ir_commands": [
+                   {
+                       "device": "entertainment_center",
+                       "command": "POWER_ON"
+                   },
+                   {
+                       "device": "entertainment_center",
+                       "command": "AUX_INPUT"
+                   },
+                   {
+                       "device": "entertainment_center",
+                       "command": "VOLUME_UP",
+                       "repeat": 5
+                   }
+                ],
+                "delay": 0
+            },
+            "off": {
+                "ir_commands": [
+                   {
+                       "device": "entertainment_center",
+                       "command": "POWER_OFF"
+                   }
+                ],
+                "delay": 0
+            }
+        },
+        {
+            "friendly_name": "WHA Sun Room",
+            "control": "ifttt",
+            "on": {
+                "event": "wha_power_sunroom_on"
+            },
+            "off": {
+                "event": "wha_power_sunroom_off"
+            }
+        },
+        {
+            "friendly_name": "WHA Back Yard",
+            "control": "ifttt",
+            "on": {
+                "event": "wha_power_backyard_on"
+            },
+            "off": {
+                "event": "wha_power_backyard_off"
+            }
+        }
+    ],
+
+    "control_services": {
+    
+        "ifttt": {
+            "key": "__super_secret_ifttt_key_goes_here__"
+        },
+    
+        "lirc": {
+            "cmd": "/usr/bin/irsend"
+        }
+    }
+}
