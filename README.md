@@ -71,7 +71,8 @@ The list of Cast-enabled devices that you wish to monitor identified by their "f
           "ir_commands": [        // list of IR commands to send
             { // first command
               "device": "htc",      // LIRC device name
-              "command": "POWER_ON" // command to send
+              "command": "POWER_ON",// command to send
+              "count": 3            // number of times to send this command
             },
             { // next command
               "device": "htc",
