@@ -1,4 +1,4 @@
-PyChromecast==0.7.3
+PyChromecast==0.8.1
 argparse==1.2.1
 enum-compat==0.0.2
 enum34==1.1.5

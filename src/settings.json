@@ -1,74 +1,90 @@
 {
     "global": {
-        "poll_delay": 0.25,
-        "reconnect_delay": 60,
-        "reload_device_delay": 14400,
-        "max_retries": 15,
-        "log_file": "/var/log/whacast.log"
+        "log_file": "whacast.log",
+        "control_services": {
+            "ifttt": {
+                "key": "__super_secret_ifttt_key_goes_here__"
+            },
+            "lirc": {
+                "cmd": "/usr/bin/irsend"
+            }
+        }
     },
-    
-    "chromecasts": [
+
+    "devices": [
         {
-            "friendly_name": "WHA Living Room",
-            "control": "lirc",
+            "friendly_name": "Living Room",
             "on": {
-                "ir_commands": [
+                "commands": [
                    {
+                       "control": "lirc",
                        "device": "entertainment_center",
-                       "command": "POWER_ON"
+                       "command": "POWER_ON",
+                       "delay": 0.3
                    },
                    {
+                       "control": "lirc",
                        "device": "entertainment_center",
-                       "command": "AUX_INPUT"
+                       "command": "AUX_INPUT",
+                       "delay": 0.3
                    },
                    {
+                       "control": "lirc",
                        "device": "entertainment_center",
                        "command": "VOLUME_UP",
-                       "repeat": 5
+                       "count": 5,
+                       "delay": 0.3
                    }
-                ],
-                "delay": 0
+                ]
             },
             "off": {
-                "ir_commands": [
+                "commands": [
                    {
+                       "control": "lirc",
                        "device": "entertainment_center",
-                       "command": "POWER_OFF"
+                       "command": "POWER_OFF",
+                       "delay": 0.3
                    }
-                ],
-                "delay": 0
+                ]
             }
         },
         {
-            "friendly_name": "WHA Sun Room",
-            "control": "ifttt",
+            "friendly_name": "Sun Room",
             "on": {
-                "event": "wha_power_sunroom_on"
+                "commands" : [
+                    {
+                        "control": "ifttt",
+                        "event": "wha_power_sunroom_on"
+                    }
+                ]
             },
             "off": {
-                "event": "wha_power_sunroom_off"
+                "commands" : [
+                    {
+                        "control": "ifttt",
+                        "event": "wha_power_sunroom_off"
+                    }
+                ]
             }
         },
         {
-            "friendly_name": "WHA Back Yard",
-            "control": "ifttt",
+            "friendly_name": "Back Yard",
             "on": {
-                "event": "wha_power_backyard_on"
+                "commands" : [
+                    {
+                        "control": "ifttt",
+                        "event": "wha_power_backyard_on"
+                    }
+                ]
             },
             "off": {
-                "event": "wha_power_backyard_off"
+                "commands" : [
+                    {
+                        "control": "ifttt",
+                        "event": "wha_power_backyard_off"
+                    }
+                ]
             }
         }
-    ],
-
-    "control_services": {
-    
-        "ifttt": {
-            "key": "__super_secret_ifttt_key_goes_here__"
-        },
-    
-        "lirc": {
-            "cmd": "/usr/bin/irsend"
-        }
-    }
+    ]
 }

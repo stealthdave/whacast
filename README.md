@@ -14,7 +14,7 @@ Installation
 ----------------
 Create your virtual environment with the following command:
 
-    $ ./castenv.sh
+    $ ./install.sh
 
 This creates a Python virtual environment named `castenv`.  You can now start **whacast** with the following command:
 
@@ -36,66 +36,15 @@ Configuration of **whacast** is done through a `json` formatted settings file th
 These settings determine wait times for the various functions involved in tracking the status of various Chromecast devices.
 
     "global": {
-      "poll_delay": 0.25,           // number of seconds between each 
-                                    // check of a Chromecast's status
-      "reconnect_delay": 60,        // number of seconds between attempts
-                                    // to reconnect to a Chromecast
-      "reload_device_delay": 14400, // number of seconds to wait before retrying
-                                    // an unresponsive Chromecast
-      "max_retries": 15,            // number of times to attempt to connect to a
-                                     // Chromecast before considering it unresponsive
-      "log_file": "/var/log/whacast.log" 
-                                    // location of the log file
-    }
-**CHROMECASTS**
-
-The list of Cast-enabled devices that you wish to monitor identified by their "friendly names".  e.g., the text name that you set that shows up in the Cast button in your apps.
-
-    "chromecasts": [ // begin list
-      { // Example IFTTT Device
-        "friendly_name": "WHA Back Yard", 
-                                  // your device's "friendly name"
-        "control": "ifttt",       // the type of device to control remotely;
-                                  // currently only "ifttt" and "lirc" are supported
-        "on": {                   // command to turn device on
-          "event": "backyard_on"  // IFTTT event to run
-        },
-        "off": {                  // command to turn device off
-          "event": "backyard_off" // IFTTT event to run
-        }
-      },
-      { // Example LIRC Device
-        "friendly_name": "WHA Living Room",
-        "control": "lirc",        // Control an LIRC device
-        "on": {
-          "ir_commands": [        // list of IR commands to send
-            { // first command
-              "device": "htc",      // LIRC device name
-              "command": "POWER_ON",// command to send
-              "count": 3            // number of times to send this command
-            },
-            { // next command
-              "device": "htc",
-              "command": "AUX_INPUT"
-            }
-          ],
-          "delay": 0              // number of seconds (or fraction) to delay between
-                                  // sending LIRC commands
-        }, // END ON
-        "off": {
-          "ir_commands": [
-            {
-              "device": "htc",
-              "command": "POWER_OFF"
-            }
-          ],
-          "delay": 0
-        } // END OFF
+      "log_file": "/var/log/whacast.log"  // location of the log file
+      "control_services": {               // see the CONTROL SERVICES section below
+        ...
       }
-    ] // END DEVICE LIST
+    }
+
 **CONTROL SERVICES**
 
-Common data needed for control services IFTTT and LIRC that are not specific to the Chromecast devices.
+Common data needed for control services IFTTT and LIRC that are not specific to the Chromecast devices.  These commands
 
     "control_services": {
       "ifttt": {
@@ -107,3 +56,6 @@ Common data needed for control services IFTTT and LIRC that are not specific to 
       }
     }
 
+**CHROMECASTS**
+
+The list of Cast-enabled devices that you wish to monitor identified by their "friendly names".  e.g., the text name that you set that shows up in the Cast button in your apps.  See the sample `settings.json` file for examples of an `lirc` and `ifttt` device.
