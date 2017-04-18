@@ -18,7 +18,7 @@ class CastListener:
             # set inital amp state
             self.new_cast_status(self.device.status)
         except Exception as error:
-            self.log("ERROR: Device \"{0}\" failed to load: {1})"\
+            self.log("ERROR: Device \"{0}\" failed to load: {1}"\
                 .format(self.name, error))
 
     '''
@@ -79,16 +79,15 @@ class CastListener:
     '''
     def call_ir_device(self, ir_command):
         # default count of 1
-        if "count" not in ir_command.keys():
-            ir_command["count"] = 1
-        # send ir command through lirc
+        count = ir_command["count"] if "count" in ir_command.keys() else 1
         lirc_cmd = [
-            device_config["lirc"]["cmd"],
-            "--count={}".format(ir_command["count"]),
+            self.global_config["control_services"]["lirc"]["cmd"],
+            "--count={}".format(count),
             "SEND_ONCE",
             ir_command["device"],
             ir_command["command"]
         ]
         # send the lirc command
-        call(lirc_cmd)
         self.log("Send IR command: {}".format(" ".join(lirc_cmd)))
+        self.log(call(lirc_cmd))
+
