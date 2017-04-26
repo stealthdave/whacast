@@ -3,6 +3,7 @@ import pychromecast
 import requests
 import time
 from subprocess import call
+from app_log import app_log
 
 class CastListener:
     def __init__(self, chromecast, device_config, global_config):
@@ -10,45 +11,34 @@ class CastListener:
         self.device_config = device_config
         self.global_config = global_config
         self.name = device_config["friendly_name"]
+        self.log_file = global_config["log_file"]
+        self.state = None
 
         # attempt to connect to device
         try:
             self.device.register_status_listener(self)
-            self.log("Now listening to device '{}'".format(self.name))
+            app_log(self.log_file, "Now listening to device '{}'".format(self.name))
             # set inital amp state
             self.new_cast_status(self.device.status)
         except Exception as error:
-            self.log("ERROR: Device \"{0}\" failed to load: {1}"\
+            app_log(self.log_file, "ERROR: Device \"{0}\" failed to load: {1}"\
                 .format(self.name, error))
-
-    '''
-    Write to log file if set; otherwise standard print
-    '''
-    def log(self, statement, initialize = False):
-        write_mode = "a"
-        if initialize:
-            write_mode = "w"
-        if "log_file" in self.global_config.keys():
-            log_file = self.global_config["log_file"]
-            with open(log_file, write_mode) as log_file:
-                timestamp = time.strftime("%b %d %Y %H:%M:%S")
-                log_file.write("{} - {}\n".format(timestamp, statement))
-        else:
-            print(statement)
 
     '''
     Listen for changes in Chromecast Device connection status
     '''
     def new_cast_status(self, status):
-        self.log("Chromecast {0} status: {1}".format(self.name,
+        app_log(self.log_file, "Chromecast {0} status: {1}".format(self.name,
                                                      status.app_id))
         # Turn on amplifier
-        if status.app_id is not None:
-            self.log('{}: Amp ON!'.format(self.name))
+        if status.app_id is not None and self.state != "ON":
+            app_log(self.log_file, '{}: Amp ON!'.format(self.name))
+            self.state = "ON"
             self.exec_device_commands(self.device_config["on"]["commands"])
         # Turn off amplifier
-        else:
-            self.log('{}: Amp OFF!'.format(self.name))
+        elif status.app_id is None and self.state != "OFF":
+            app_log(self.log_file, '{}: Amp OFF!'.format(self.name))
+            self.state = "OFF"
             self.exec_device_commands(self.device_config["off"]["commands"])
 
     '''
@@ -71,8 +61,8 @@ class CastListener:
         key = self.global_config["control_services"]["ifttt"]["key"]
         url = "https://maker.ifttt.com/trigger/{0}/with/key/{1}"\
             .format(command["event"], key)
-        self.log('ifttt command: {}'.format(url))
-        self.log(requests.post(url))
+        app_log(self.log_file, 'ifttt command: {}'.format(url))
+        app_log(self.log_file, requests.post(url))
 
     '''
     Control an IR device
@@ -88,6 +78,5 @@ class CastListener:
             ir_command["command"]
         ]
         # send the lirc command
-        self.log("Send IR command: {}".format(" ".join(lirc_cmd)))
-        self.log(call(lirc_cmd))
-
+        app_log(self.log_file, "Send IR command: {}".format(" ".join(lirc_cmd)))
+        app_log(self.log_file, call(lirc_cmd))
