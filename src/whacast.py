@@ -53,7 +53,8 @@ if __name__ == "__main__":
                 # no need to check every possible moment
                 time.sleep(10)
                 try:
-                    device_check = devices[device_name].status is not None
+                    this_device = devices[device_name].device
+                    device_check = this_device.status is not None
                 except Exception as error:
                     error_msg = "DEVICE ERROR '{0}'\nError: {1}"
                     app_log(log_file, error_msg.format(device_name, error))

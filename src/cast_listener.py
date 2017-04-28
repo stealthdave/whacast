@@ -17,7 +17,8 @@ class CastListener:
         # attempt to connect to device
         try:
             self.device.register_status_listener(self)
-            app_log(self.log_file, "Now listening to device '{}'".format(self.name))
+            app_log(self.log_file, "Now listening to device '{}'"\
+                .format(self.name))
             # set inital amp state
             self.new_cast_status(self.device.status)
         except Exception as error:
