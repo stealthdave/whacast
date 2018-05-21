@@ -1,0 +1,5 @@
+*.pyc
+*.log
+castenv
+src/whacast.json
+src/.~c9*
