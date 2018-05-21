@@ -1,14 +1,2 @@
-PyChromecast==0.8.1
-argparse==1.2.1
-enum-compat==0.0.2
-enum34==1.1.5
-netifaces==0.10.4
-normalize==1.0.0
-protobuf==3.0.0b2
-requests==2.10.0
-richenum==1.1.2
-six==1.10.0
-smmap==0.9.0
-unique==0.1
-wsgiref==0.1.2
-zeroconf==0.17.5
+PyChromecast==0.8.2
+requests==2.18.4

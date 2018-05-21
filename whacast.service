@@ -1,14 +1,18 @@
 [Unit]
 Description=Whole House Audio Chromecast Amplifier
-After=multi-user.target
+After=network-online.target
 
 [Service]
 WorkingDirectory=/opt/whacast/src
-ExecStart=/opt/whacast/castenv/bin/python -m whacast whacast.json
+ExecStart=/opt/whacast/castenv/bin/python -u -m whacast whacast.json
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=always
 RestartSec=3
+StandardOutput=journal
+StandardError=syslog
+JournalIdentifier=WHACAST
+SyslogIdentifier=WHACAST
 
 [Install]
-Alias=whacast.service
+WantedBy=network-online.target
