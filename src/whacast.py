@@ -49,6 +49,9 @@ if __name__ == "__main__":
                 devices[friendly_name] = CastListener(cast_device,
                                                       device_config,
                                                       config["global"])
+            else:
+                app_log(log_file,
+                        "ERROR: Device '{0}' not found!".format(friendly_name))
 
         app_log(log_file, "=== All Chromecasts Loaded ===")
 
