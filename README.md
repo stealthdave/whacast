@@ -7,7 +7,7 @@ This script will automatically turn on IFTTT and infrared remote controlled devi
 Requirements
 ----------------------
 
-**whacast** is developed for Linux installations, but it should run on most network-connected devices running Python 3.5+, including the Raspberry Pi.  **whacast** uses [PyChromecast](https://github.com/balloob/pychromecast "PyChromecast") to track the status of your Cast devices, and turns equipment on or off depending on whether content is currently being streamed.  A Python virtual environment (venv) is recommended.
+**whacast** is developed for Linux installations, but it should run on most network-connected devices running Python 3.6+, including the Raspberry Pi.  **whacast** uses [PyChromecast](https://github.com/balloob/pychromecast "PyChromecast") to track the status of your Cast devices, and turns equipment on or off depending on whether content is currently being streamed.  A Python virtual environment (venv) is recommended.
 
 
 Installation
