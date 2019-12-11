@@ -36,10 +36,13 @@ if __name__ == "__main__":
         for device_config in config["devices"]:
             friendly_name = device_config["friendly_name"]
             app_log(log_file, "Loading Chromecast '{}'".format(friendly_name))
-            cast_device = next(cc for cc in chromecasts \
-                                    if cc.device.friendly_name == friendly_name)
-            cast_device.wait()
+            # find Chromecast device
+            cast_device = None
+            for cc in chromecasts:
+                if cc.device.friendly_name == friendly_name:
+                    cast_device = cc
             if cast_device:
+                cast_device.wait()
                 devices[friendly_name] = CastListener(cast_device,
                                                       device_config,
                                                       config["global"])
