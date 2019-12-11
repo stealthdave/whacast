@@ -26,6 +26,9 @@ if __name__ == "__main__":
         except Exception as error:
             usage("Could not open configuration file '{}'".format(json_file))
 
+        # Default to stdout if no log file is specified
+        if "log_file" not in config["global"]:
+            config["global"]["log_file"] = None
         log_file = config["global"]["log_file"]
         app_log(log_file, "=== START WHACAST ===")
 
