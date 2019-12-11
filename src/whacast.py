@@ -44,7 +44,7 @@ if __name__ == "__main__":
             for cc in chromecasts:
                 if cc.device.friendly_name == friendly_name:
                     cast_device = cc
-            if cast_device:
+            if cast_device is not None:
                 cast_device.wait()
                 devices[friendly_name] = CastListener(cast_device,
                                                       device_config,
