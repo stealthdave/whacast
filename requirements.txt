@@ -1,2 +1,2 @@
-PyChromecast==0.8.2
-requests==2.18.4
+PyChromecast==4.1.0
+requests==2.22.0
