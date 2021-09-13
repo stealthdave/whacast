@@ -1,5 +1,6 @@
 *.pyc
 *.log
 castenv
-src/whacast.json
+src/settings.json
 src/.~c9*
+src/__pycache__

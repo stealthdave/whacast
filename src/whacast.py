@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
         # Load Devices
         devices = {}
-        chromecasts = pychromecast.get_chromecasts()
+        chromecasts, browser = pychromecast.get_chromecasts()
 
         for device_config in config["devices"]:
             friendly_name = device_config["friendly_name"]
