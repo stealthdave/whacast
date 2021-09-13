@@ -1,11 +1,9 @@
 #/usr/bin/python
-from __future__ import print_function
 import json
 import pychromecast
 import time
 from sys import argv
 from cast_listener import CastListener
-from app_log import app_log
 
 def usage(message):
     if message:
@@ -30,7 +28,7 @@ if __name__ == "__main__":
         if "log_file" not in config["global"]:
             config["global"]["log_file"] = None
         log_file = config["global"]["log_file"]
-        app_log(log_file, "=== START WHACAST ===")
+        print("=== START WHACAST ===")
 
         # Load Devices
         devices = {}
@@ -38,7 +36,7 @@ if __name__ == "__main__":
 
         for device_config in config["devices"]:
             friendly_name = device_config["friendly_name"]
-            app_log(log_file, "Loading Chromecast '{}'".format(friendly_name))
+            print("Loading Chromecast '{}'".format(friendly_name))
             # find Chromecast device
             cast_device = None
             for cc in chromecasts:
@@ -50,10 +48,9 @@ if __name__ == "__main__":
                                                       device_config,
                                                       config["global"])
             else:
-                app_log(log_file,
-                        "ERROR: Device '{0}' not found!".format(friendly_name))
+                print("ERROR: Device '{0}' not found!".format(friendly_name))
 
-        app_log(log_file, "=== All Chromecasts Loaded ===")
+        print("=== All Chromecasts Loaded ===")
 
         # halt the script if any of devices lose connection
         device_check = True
@@ -66,10 +63,9 @@ if __name__ == "__main__":
                     device_check = this_device.status is not None
                 except Exception as error:
                     error_msg = "DEVICE ERROR '{0}'\nError: {1}"
-                    app_log(log_file, error_msg.format(device_name, error))
+                    print(error_msg.format(device_name, error))
                     device_check = False
                 if not device_check:
-                    app_log(log_file, "DEVICE '{}' DISCONNECTED"\
-                        .format(device_name))
+                    print("DEVICE '{}' DISCONNECTED".format(device_name))
 
-        app_log(log_file, "=== EXIT WHACAST ===")
+        print("=== EXIT WHACAST ===")
