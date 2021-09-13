@@ -4,7 +4,7 @@ After=network-online.target
 
 [Service]
 WorkingDirectory=/opt/whacast/src
-ExecStart=/opt/whacast/castenv/bin/python -u -m whacast whacast.json
+ExecStart=/opt/whacast/castenv/bin/python -u -m whacast settings.json
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=always
