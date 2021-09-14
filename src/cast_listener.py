@@ -55,10 +55,10 @@ class CastListener:
     '''
     def call_ifttt(self, command):
         key = self.global_config["control_services"]["ifttt"]["key"]
-        url = "https://maker.ifttt.com/trigger/{0}/with/key/{1}"\
-            .format(command["event"], key)
-        print('ifttt command: {}'.format(url))
-        print(requests.post(url.replace(key, '{secret_key}')))
+        url = f'https://maker.ifttt.com/trigger/{command["event"]}/with/key/{key}'
+        print(f'ifttt command: "{url.replace(key, "{secret_key}")}"')
+        response = requests.get(url)
+        print(f'ifttt response: {response.status_code} - {response.text}')
 
     '''
     Control an IR device
